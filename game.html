@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta name="monetag" content="2346e206bb2f7846f16fb9a56e4b2d40">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>3D Ludo Arena</title>
@@ -19,6 +16,36 @@
             background: radial-gradient(circle at center, #1e3a8a 0%, #09132e 65%, #030712 100%) !important;
             font-family: 'Segoe UI', Tahoma, sans-serif;
             user-select: none;
+        }
+
+        /* TOP FIXED HEADER AD BAR */
+        #top-ad-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 52px;
+            background: rgba(10, 15, 30, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+        }
+
+        /* BOTTOM FIXED FOOTER AD BAR */
+        #bottom-ad-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100vw;
+            height: 54px;
+            background: rgba(10, 15, 30, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
         }
 
         /* DYNAMIC CORNER HUD BOX */
@@ -39,10 +66,11 @@
             transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        .pos-red { top: 24px; left: 16px; border-color: rgba(239, 68, 68, 0.6) !important; }
-        .pos-green { top: 24px; right: 16px; border-color: rgba(34, 197, 94, 0.6) !important; }
-        .pos-yellow { bottom: 75px; right: 16px; border-color: rgba(234, 179, 8, 0.6) !important; }
-        .pos-blue { bottom: 75px; left: 16px; border-color: rgba(59, 130, 246, 0.6) !important; }
+        /* Positions adjusted for Top & Bottom Ads */
+        .pos-red { top: 62px !important; left: 16px; border-color: rgba(239, 68, 68, 0.6) !important; }
+        .pos-green { top: 62px !important; right: 16px; border-color: rgba(34, 197, 94, 0.6) !important; }
+        .pos-yellow { bottom: 65px !important; right: 16px; border-color: rgba(234, 179, 8, 0.6) !important; }
+        .pos-blue { bottom: 65px !important; left: 16px; border-color: rgba(59, 130, 246, 0.6) !important; }
 
         .turn-title { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #94a3b8; font-weight: 700; }
         .turn-row { font-size: 15px; font-weight: 800; display: flex; align-items: center; gap: 7px; }
@@ -68,14 +96,14 @@
 
         /* FLOATING CIRCULAR BOTTOM HOME BUTTON */
         #exit-home-btn {
-            position: absolute;
-            bottom: 18px;
-            left: 18px;
-            z-index: 30;
+            position: fixed;
+            bottom: 66px;
+            left: 16px;
+            z-index: 100000;
             width: 46px;
             height: 46px;
             border-radius: 50%;
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(15, 23, 42, 0.95);
             border: 2px solid rgba(255, 255, 255, 0.22);
             color: #ffffff;
             display: flex;
@@ -94,15 +122,47 @@
             pointer-events: none; z-index: 50; display: none;
         }
 
+        /* ENHANCED MATCH OVER / WINNER MODAL */
         #winner-banner {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.7);
-            background: rgba(15, 23, 42, 0.95); padding: 30px 40px; border-radius: 24px;
-            border: 2px solid #facc15; box-shadow: 0 0 50px rgba(250, 204, 21, 0.6);
-            color: #fff; text-align: center; z-index: 60; display: none;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: rgba(15, 23, 42, 0.98);
+            padding: 24px 20px;
+            border-radius: 24px;
+            border: 2.5px solid #facc15;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(250, 204, 21, 0.4);
+            color: #fff;
+            text-align: center;
+            z-index: 100005;
+            display: none;
+            width: 90%;
+            max-width: 360px;
+            backdrop-filter: blur(12px);
+            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        #winner-title { font-size: 30px; font-weight: 900; color: #facc15; letter-spacing: 1px; }
-        #winner-sub { font-size: 16px; margin-top: 8px; color: #f8fafc; font-weight: 600; line-height: 1.5; }
+        #winner-title { font-size: 26px; font-weight: 900; color: #facc15; letter-spacing: 0.5px; }
+        #winner-sub { font-size: 14px; margin-top: 8px; color: #f8fafc; font-weight: 600; line-height: 1.5; }
+
+        .end-btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 18px;
+        }
+        .end-btn {
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        .end-btn:hover { transform: scale(1.02); }
+        .btn-home { background: #10b981; color: #ffffff; }
+        .btn-restart { background: #3b82f6; color: #ffffff; }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
@@ -110,6 +170,17 @@
 </head>
 <body>
 
+<!-- 1. TOP HEADER ADSTERRA BANNER -->
+<div id="top-ad-header">
+    <iframe srcdoc="<!DOCTYPE html><html><body style='margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;'><script type='text/javascript'>atOptions={'key':'22fbc927b270735d5340af7fbb42a9d0','format':'iframe','height':50,'width':320,'params':{}};</script><script type='text/javascript' src='https://bauval.org/22/22fbc927b270735d5340af7fbb42a9d0'></script></body></html>" width="320" height="50" frameborder="0" scrolling="no" style="border:none;overflow:hidden;"></iframe>
+</div>
+
+<!-- 2. BOTTOM FOOTER ADSTERRA BANNER -->
+<div id="bottom-ad-footer">
+    <iframe srcdoc="<!DOCTYPE html><html><body style='margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;'><script type='text/javascript'>atOptions={'key':'22fbc927b270735d5340af7fbb42a9d0','format':'iframe','height':50,'width':320,'params':{}};</script><script type='text/javascript' src='https://bauval.org/22/22fbc927b270735d5340af7fbb42a9d0'></script></body></html>" width="320" height="50" frameborder="0" scrolling="no" style="border:none;overflow:hidden;"></iframe>
+</div>
+
+<!-- 3. HOME BUTTON (ABOVE FOOTER AD) -->
 <button id="exit-home-btn" title="Dashboard" onclick="exitToDashboard()">
     <svg viewBox="0 0 24 24">
         <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
@@ -129,9 +200,20 @@
 
 <canvas id="fireworks-canvas"></canvas>
 
+<!-- 4. DYNAMIC WINNER MODAL WITH ADSTERRA BANNER & CONTROLS -->
 <div id="winner-banner">
     <div id="winner-title">🏆 RED WINS! 🏆</div>
     <div id="winner-sub">Champion of 3D Ludo Arena!</div>
+
+    <!-- MATCH OVER REWARD ADSTERRA BANNER -->
+    <div style="margin: 14px auto 8px auto; width: 320px; height: 50px; border-radius: 8px; overflow: hidden; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center;">
+        <iframe srcdoc="<!DOCTYPE html><html><body style='margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;'><script type='text/javascript'>atOptions={'key':'22fbc927b270735d5340af7fbb42a9d0','format':'iframe','height':50,'width':320,'params':{}};</script><script type='text/javascript' src='https://bauval.org/22/22fbc927b270735d5340af7fbb42a9d0'></script></body></html>" width="320" height="50" frameborder="0" scrolling="no" style="border:none;overflow:hidden;"></iframe>
+    </div>
+
+    <div class="end-btn-group">
+        <button class="end-btn btn-home" onclick="exitToDashboard()">RETURN TO DASHBOARD 🏠</button>
+        <button class="end-btn btn-restart" onclick="window.location.reload()">PLAY AGAIN 🔁</button>
+    </div>
 </div>
 
 <script>
@@ -145,7 +227,6 @@ const ADMOB_CONFIG = {
 
 let isInterstitialReady = false;
 
-// 1. Bottom Banner Ad
 async function initAdMobBanner() {
     try {
         const AdMob = window.Capacitor?.Plugins?.AdMob;
@@ -158,14 +239,10 @@ async function initAdMobBanner() {
                 margin: 0,
                 isTesting: false
             });
-            console.log("AdMob: Bottom Banner displayed");
         }
-    } catch (err) {
-        console.warn("Banner load error:", err);
-    }
+    } catch (err) {}
 }
 
-// 2. Preload Interstitial (Match chalte waqt background me ad ready karega)
 async function preloadGameOverInterstitial() {
     try {
         const AdMob = window.Capacitor?.Plugins?.AdMob;
@@ -175,25 +252,18 @@ async function preloadGameOverInterstitial() {
                 isTesting: false
             });
             isInterstitialReady = true;
-            console.log("AdMob: Interstitial ad ready for Game Over");
         }
-    } catch (err) {
-        console.warn("Interstitial preload error:", err);
-    }
+    } catch (err) {}
 }
 
-// 3. Trigger Interstitial on Match Complete
 async function triggerGameOverAd() {
     try {
         const AdMob = window.Capacitor?.Plugins?.AdMob;
         if (AdMob && isInterstitialReady) {
             await AdMob.showInterstitial();
             isInterstitialReady = false;
-            console.log("AdMob: Interstitial shown on Game Over");
         }
-    } catch (err) {
-        console.warn("Interstitial show failed:", err);
-    }
+    } catch (err) {}
 }
 
 const MATCH_STATE_KEY = "ludo_active_match_state_v4";
@@ -205,7 +275,7 @@ const sixAudio = new Audio('yeahboi.mp3'); sixAudio.preload = 'auto';
 const cutAudio = new Audio('cut.mp3'); cutAudio.preload = 'auto';
 const clickAudio = new Audio('click.mp3'); clickAudio.preload = 'auto';
 const niceAudio = new Audio('nice.mp3'); niceAudio.preload = 'auto';
-const winAudio = new Audio('finalcal.mp3'); winAudio.preload = 'auto';
+const winAudio = new Audio('finalcel.mp3'); winAudio.preload = 'auto';
 
 function playSound(audio) {
     try {
@@ -416,10 +486,10 @@ HOME_RUNS.BLUE.forEach(p => renderTile(p, C_BLUE));
 
 // --- 4. TOKENS SETUP ---
 const TEAMS = {
-    RED:    { hex: C_RED,    startIdx: 0,  homeBase: [-4.4, -4.4] },
-    GREEN:  { hex: C_GREEN,  startIdx: 13, homeBase: [4.4, -4.4] },
-    YELLOW: { hex: C_YELLOW, startIdx: 26, homeBase: [4.4, 4.4] },
-    BLUE:   { hex: C_BLUE,   startIdx: 39, homeBase: [-4.4, 4.4] }
+    RED:    { hex: C_RED,    startIdx: 0,  homeBase: [-4.4, -4.4], name: "RED" },
+    GREEN:  { hex: C_GREEN,  startIdx: 13, homeBase: [4.4, -4.4], name: "GREEN" },
+    YELLOW: { hex: C_YELLOW, startIdx: 26, homeBase: [4.4, 4.4], name: "YELLOW" },
+    BLUE:   { hex: C_BLUE,   startIdx: 39, homeBase: [-4.4, 4.4], name: "BLUE" }
 };
 
 const offsets = [[-1.1, -1.1], [1.1, -1.1], [-1.1, 1.1], [1.1, 1.1]];
@@ -558,16 +628,22 @@ function triggerWinnerCelebration(winnerTeam) {
     const banner = document.getElementById('winner-banner');
 
     playSound(winAudio);
-
-    // 🚀 SHOW INTERSTITIAL AD ON MATCH COMPLETION
     setTimeout(triggerGameOverAd, 1200);
 
+    const winnerColorHex = '#' + TEAMS[winnerTeam].hex.toString(16).padStart(6, '0');
     let subTextHtml = `Champion of 3D Ludo Arena!`;
+
+    // Dynamic Winner Title Text & Border Color Match
+    const winTitleEl = document.getElementById('winner-title');
+    winTitleEl.innerText = `🏆 ${winnerTeam} WINS! 🏆`;
+    winTitleEl.style.color = winnerColorHex;
+    banner.style.borderColor = winnerColorHex;
+    banner.style.boxShadow = `0 0 50px rgba(0,0,0,0.9), 0 0 30px ${winnerColorHex}66`;
 
     if (winnerTeam === "RED") {
         try {
             let saved = localStorage.getItem(PROFILE_KEY);
-            let profileData = saved ? JSON.parse(saved) : { name: "Shankii", coins: 150, level: 1, xp: 45 };
+            let profileData = saved ? JSON.parse(saved) : { name: "Player", coins: 150, level: 1, xp: 45 };
 
             profileData.coins = Number(profileData.coins || 0) + 150;
             
@@ -581,15 +657,17 @@ function triggerWinnerCelebration(winnerTeam) {
             profileData.level = curLvl;
 
             localStorage.setItem(PROFILE_KEY, JSON.stringify(profileData));
-            subTextHtml = `Champion of 3D Ludo Arena!<br><span style="color:#facc15; font-size:19px; font-weight:800;">🪙 +150 Coins Credited!</span><br><small style="color:#94a3b8; font-size:12px;">(50 Entry Refund + 100 Prize)</small>`;
+            subTextHtml = `Victory is yours!<br><span style="color:#facc15; font-size:18px; font-weight:800;">🪙 +150 Coins Added!</span><br><small style="color:#94a3b8; font-size:12px;">(50 Entry Refund + 100 Prize)</small>`;
         } catch(e) {
             console.error("Coin Reward error:", e);
         }
     } else {
-        subTextHtml = `Better luck next time!<br><span style="color:#ef4444; font-size:16px; font-weight:700;">Computer won the round.</span>`;
+        const isBotWinner = (isAIMode && winnerTeam === "YELLOW");
+        subTextHtml = isBotWinner 
+            ? `Better luck next time!<br><span style="color:#ef4444; font-size:15px; font-weight:700;">Computer (Bot) won the match.</span>`
+            : `<span style="color:${winnerColorHex}; font-size:16px; font-weight:700;">${winnerTeam} finished first!</span><br>Good game!`;
     }
 
-    document.getElementById('winner-title').innerText = `🏆 ${winnerTeam} WINS! 🏆`;
     document.getElementById('winner-sub').innerHTML = subTextHtml;
     banner.style.display = 'block';
     setTimeout(() => { banner.style.transform = 'translate(-50%, -50%) scale(1)'; }, 10);
@@ -859,7 +937,7 @@ function updateTurnDisplay(team, isBonus) {
         }, 750);
     } else {
         rollBtn.disabled = false;
-        msgEl.innerText = isBonus ? "🎉 Bonus Turn! Roll karo!" : `Turn: ${team} • Roll karo!`;
+        msgEl.innerText = isBonus ? "🎉 Bonus Turn! Roll karo!" : `Turn: ${team} (Roll karo!)`;
     }
 }
 
@@ -1102,53 +1180,5 @@ if (wasRestored) {
     msgEl.innerText = "Match Resumed! Turn: " + activeTeam;
 }
 </script>
-
-<!-- BOTTOM GAMEPLAY BANNER AD -->
-<div id="game-bottom-banner" onclick="openBannerAd()" style="
-    position: fixed;
-    bottom: 12px;
-    left: 85px;
-    right: 15px;
-    height: 52px;
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
-    border: 1px solid rgba(250, 204, 21, 0.4);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 14px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    cursor: pointer;
-    user-select: none;">
-    
-    <div style="display: flex; align-items: center; gap: 8px;">
-        <span style="font-size: 20px;">🎁</span>
-        <div style="display: flex; flex-direction: column;">
-            <span style="color: #facc15; font-size: 11px; font-weight: bold; letter-spacing: 0.5px;">BONUS REWARD</span>
-            <span style="color: #94a3b8; font-size: 10px;">Tap to claim free perks</span>
-        </div>
-    </div>
-    
-    <div style="
-        background: #facc15;
-        color: #0f172a;
-        font-size: 11px;
-        font-weight: 800;
-        padding: 5px 10px;
-        border-radius: 6px;
-        letter-spacing: 0.5px;">
-        CLAIM
-    </div>
-</div>
-
-<script>
-function openBannerAd() {
-    const bannerUrl = "https://uplcm.com/4/12236000";
-    window.open(bannerUrl, '_blank');
-}
-</script>
-
-
 </body>
 </html>
