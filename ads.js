@@ -1,89 +1,96 @@
-// ==========================================
-// 3D LUDO ARENA - MONETAG DIRECT ADS (ads.js)
-// ==========================================
-const MONETAG_DIRECT_URL = "https://uplcm.com/4/12233746";
+// --- GLOBAL ADSTERRA BANNER ENGINE ---
 
-let adTimerInterval = null;
-let adSecondsLeft = 5;
-let currentRewardCallback = null;
+// Sirf tabhi chalao jab URL me 'game.html' ho
+const isGamePage = window.location.pathname.includes('game.html') || window.location.href.includes('game.html');
 
-// Direct ad open karne aur reward dene ka function
-function triggerRewardedAd(onRewardSuccess) {
-    currentRewardCallback = onRewardSuccess;
-
-    try {
-        // Player ko ad page par bhejega
-        window.open(MONETAG_DIRECT_URL, "_blank");
-    } catch (e) {
-        console.warn("Direct link open error:", e);
+if (isGamePage) {
+    function createBannerFrame() {
+        const iframe = document.createElement('iframe');
+        iframe.srcdoc = `<!DOCTYPE html><html><body style="margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;"><script type="text/javascript">atOptions={'key':'22fbc927b270735d5340af7fbb42a9d0','format':'iframe','height':50,'width':320,'params':{}};</script><script type="text/javascript" src="https://bauval.org/22/22fbc927b270735d5340af7fbb42a9d0"></script></body></html>`;
+        iframe.width = "320";
+        iframe.height = "50";
+        iframe.style.border = "none";
+        iframe.style.overflow = "hidden";
+        iframe.scrolling = "no";
+        return iframe;
     }
 
-    // Saath me game screen par countdown chalega
-    runFallbackAdModal();
-}
+    function initAdsterraUI() {
+        // 1. Purani bonus strip gayab karo
+        const oldBonus = document.getElementById('game-bottom-banner');
+        if (oldBonus) oldBonus.remove();
 
-function runFallbackAdModal() {
-    adSecondsLeft = 5;
-    const modal = document.getElementById('ad-modal');
-    const timerText = document.getElementById('ad-countdown');
-    const actionBtn = document.getElementById('ad-action-btn');
-    const cornerX = document.getElementById('corner-x-btn');
+        // 2. Game screen specific CSS
+        const style = document.createElement('style');
+        style.innerHTML = `
+            #game-bottom-banner, .bonus-reward-bar {
+                display: none !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
+            }
 
-    if (!modal) return;
+            #global-top-ad {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100vw !important;
+                height: 52px !important;
+                background: rgba(10, 15, 30, 0.95) !important;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                z-index: 999999 !important;
+            }
 
-    timerText.innerText = "5";
-    actionBtn.innerText = "Please Wait (5s)...";
-    actionBtn.style.background = "#334155";
-    actionBtn.style.color = "#94a3b8";
-    actionBtn.style.cursor = "not-allowed";
+            #global-bottom-ad {
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                width: 100vw !important;
+                height: 54px !important;
+                background: rgba(10, 15, 30, 0.95) !important;
+                border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                z-index: 999999 !important;
+            }
 
-    if (cornerX) cornerX.classList.remove('active');
-    modal.style.display = 'flex';
+            #exit-home-btn, .home-btn, a[href*="index"], a[href*="home"] {
+                position: fixed !important;
+                bottom: 66px !important;
+                left: 16px !important;
+                z-index: 1000000 !important;
+                display: flex !important;
+                visibility: visible !important;
+            }
 
-    if (adTimerInterval) clearInterval(adTimerInterval);
+            .pos-red { top: 62px !important; left: 16px !important; }
+            .pos-green { top: 62px !important; right: 16px !important; }
+        `;
+        document.head.appendChild(style);
 
-    adTimerInterval = setInterval(() => {
-        adSecondsLeft--;
-        if (adSecondsLeft > 0) {
-            timerText.innerText = adSecondsLeft;
-            actionBtn.innerText = "Please Wait (" + adSecondsLeft + "s)...";
-        } else {
-            clearInterval(adTimerInterval);
-            timerText.innerText = "✅ REWARD UNLOCKED!";
-            actionBtn.innerText = "CLAIM +100 COINS";
-            actionBtn.style.background = "#10b981";
-            actionBtn.style.color = "#ffffff";
-            actionBtn.style.cursor = "pointer";
-
-            if (cornerX) cornerX.classList.add('active');
+        // 3. Top Banner
+        if (!document.getElementById('global-top-ad')) {
+            const topBar = document.createElement('div');
+            topBar.id = 'global-top-ad';
+            topBar.appendChild(createBannerFrame());
+            document.body.appendChild(topBar);
         }
-    }, 1000);
-}
 
-function handleAdModalClose() {
-    if (adSecondsLeft <= 0) {
-        if (adTimerInterval) clearInterval(adTimerInterval);
-        const modal = document.getElementById('ad-modal');
-        if (modal) modal.style.display = 'none';
-
-        if (typeof currentRewardCallback === 'function') {
-            currentRewardCallback();
-            currentRewardCallback = null;
+        // 4. Bottom Banner
+        if (!document.getElementById('global-bottom-ad')) {
+            const botBar = document.createElement('div');
+            botBar.id = 'global-bottom-ad';
+            botBar.appendChild(createBannerFrame());
+            document.body.appendChild(botBar);
         }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initAdsterraUI);
     } else {
-        alert("Pehle 5 seconds complete hone dein reward ke liye!");
-    }
-}
-
-function handleAdModalAction() {
-    if (adSecondsLeft <= 0) {
-        if (adTimerInterval) clearInterval(adTimerInterval);
-        const modal = document.getElementById('ad-modal');
-        if (modal) modal.style.display = 'none';
-
-        if (typeof currentRewardCallback === 'function') {
-            currentRewardCallback();
-            currentRewardCallback = null;
-        }
+        initAdsterraUI();
     }
 }
